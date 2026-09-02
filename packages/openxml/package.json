@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@officewrite/core": "*",
-    "docx": "^9.5.0",
-    "fast-xml-parser": "^5.10.1",
+    "docx": "^9.7.1",
+    "fast-xml-parser": "^5.11.1",
     "jszip": "^3.10.1"
   },
   "devDependencies": {
