@@ -54,7 +54,7 @@
     "electron": "^39.8.10",
     "electron-builder": "^26.15.3",
     "jsdom": "^26.1.0",
-    "png-to-ico": "^2.1.8",
+    "png-to-ico": "^3.0.2",
     "sharp": "^0.35.0",
     "typescript": "^5.8.3",
     "vite": "^6.4.3",
