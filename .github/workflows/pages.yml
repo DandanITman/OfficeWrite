@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Verify Pages site files
         run: node scripts/verify-pages.mjs
@@ -41,7 +41,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Verify GitHub Pages is enabled
         env:
@@ -73,12 +73,12 @@ jobs:
           echo "GitHub Pages is enabled for this repository."
 
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       # docs/app is gitignored: the browser build is produced here so the
       # committed tree never carries a bundle that can drift from the source.
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -90,7 +90,7 @@ jobs:
         run: npm run build:web
 
       - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: docs
 
