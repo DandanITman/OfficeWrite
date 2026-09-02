@@ -1,0 +1,118 @@
+{
+  "name": "@officewrite/desktop",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Officewrite: a free, open-source word processor and an alternative to Microsoft Word, LibreOffice and OpenOffice. A non-profit educational project.",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "dev:test": "vite --mode test --strictPort --port 5173",
+    "icons": "node scripts/process-icon.mjs",
+    "prebuild": "npm run icons",
+    "build": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.electron.json && vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.electron.json",
+    "test": "vitest run",
+    "package": "npm run build && electron-builder --win",
+    "build:web": "vite build --mode web"
+  },
+  "dependencies": {
+    "@officewrite/core": "*",
+    "@officewrite/openxml": "*",
+    "@tiptap/extension-color": "^2.12.0",
+    "@tiptap/extension-font-family": "^2.12.0",
+    "@tiptap/extension-highlight": "^2.12.0",
+    "@tiptap/extension-image": "^2.12.0",
+    "@tiptap/extension-link": "^2.12.0",
+    "@tiptap/extension-placeholder": "^2.12.0",
+    "@tiptap/extension-table": "^2.12.0",
+    "@tiptap/extension-table-cell": "^2.12.0",
+    "@tiptap/extension-table-header": "^2.12.0",
+    "@tiptap/extension-table-row": "^2.12.0",
+    "@tiptap/extension-task-item": "^2.27.2",
+    "@tiptap/extension-task-list": "^2.27.2",
+    "@tiptap/extension-text-align": "^2.12.0",
+    "@tiptap/extension-text-style": "^2.12.0",
+    "@tiptap/extension-underline": "^2.12.0",
+    "@tiptap/pm": "^2.12.0",
+    "@tiptap/react": "^2.12.0",
+    "@tiptap/starter-kit": "^2.12.0",
+    "dictionary-de": "^3.0.0",
+    "dictionary-en": "^4.0.0",
+    "dictionary-es": "^4.0.0",
+    "dictionary-fr": "^3.0.0",
+    "lucide-react": "^0.511.0",
+    "nspell": "^2.1.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "word-extractor": "^1.0.4"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.1",
+    "electron": "^39.8.10",
+    "electron-builder": "^26.15.3",
+    "jsdom": "^26.1.0",
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.35.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.4.3",
+    "vite-plugin-electron": "^0.29.0",
+    "vite-plugin-electron-renderer": "^0.14.6",
+    "vitest": "^4.1.8"
+  },
+  "build": {
+    "appId": "com.officewrite.app",
+    "productName": "Officewrite",
+    "electronVersion": "39.8.5",
+    "icon": "build/icon.ico",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "node_modules/nspell/**/*",
+      "node_modules/dictionary-en/**/*",
+      "node_modules/dictionary-de/**/*",
+      "node_modules/dictionary-es/**/*",
+      "node_modules/dictionary-fr/**/*",
+      "node_modules/word-extractor/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "build/icon.png",
+        "to": "icon.png"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico",
+      "fileAssociations": [
+        {
+          "ext": "officewrite",
+          "name": "Officewrite Document",
+          "role": "Editor"
+        },
+        {
+          "ext": "docx",
+          "name": "DOCX Document",
+          "role": "Editor"
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    }
+  }
+}

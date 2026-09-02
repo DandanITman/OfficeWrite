@@ -1,0 +1,115 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+      - 'scripts/verify-pages.mjs'
+      # /app is built from the renderer, so a change there changes the site.
+      - 'apps/desktop/**'
+      - 'packages/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  site-check:
+    name: Verify Pages site files
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify Pages site files
+        run: node scripts/verify-pages.mjs
+
+  deploy:
+    needs: site-check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify GitHub Pages is enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          status=$(curl -sS -o /tmp/pages.json -w "%{http_code}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/pages")
+
+          if [ "$status" = "404" ]; then
+            echo "::error title=GitHub Pages not enabled::Pages is not enabled for ${{ github.repository }}."
+            echo ""
+            echo "One-time setup:"
+            echo "  1. Open https://github.com/${{ github.repository }}/settings/pages"
+            echo "  2. Under Build and deployment, set Source to GitHub Actions"
+            echo "  3. Re-run this workflow from the Actions tab"
+            exit 1
+          fi
+
+          if [ "$status" != "200" ]; then
+            echo "::error title=GitHub Pages API error::Unexpected response HTTP $status"
+            cat /tmp/pages.json
+            exit 1
+          fi
+
+          echo "GitHub Pages is enabled for this repository."
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # docs/app is gitignored: the browser build is produced here so the
+      # committed tree never carries a bundle that can drift from the source.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the browser app
+        run: npm run build:web
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify deployed site responds
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          echo "Checking $PAGE_URL"
+          for attempt in 1 2 3 4 5 6; do
+            if curl -fsSL "$PAGE_URL" | grep -qi "Officewrite"; then
+              echo "Deploy verified: $PAGE_URL"
+              exit 0
+            fi
+            echo "Attempt $attempt: site not ready yet, waiting..."
+            sleep 10
+          done
+          echo "::warning title=Deploy verification timed out::Deployment finished but $PAGE_URL did not return expected content within 60 seconds. It may still propagate."

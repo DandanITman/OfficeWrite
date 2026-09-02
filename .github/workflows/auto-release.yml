@@ -1,0 +1,219 @@
+name: Auto release from main
+
+# Every push to main cuts a release: bump the version, write a changelog entry,
+# tag it, then hand off to the workflows that already know how to build the
+# installer and deploy the site.
+#
+# Two GitHub behaviours make this safe rather than recursive:
+#
+#   Pushes made with GITHUB_TOKEN do not start new workflow runs. The version
+#   bump this job commits therefore cannot re-trigger this job -- the loop is
+#   closed by the platform, not by luck. The message guard below is a second
+#   belt for the day someone swaps in a personal access token.
+#
+#   workflow_dispatch is the documented exception to that rule, so dispatching
+#   release.yml and pages.yml by hand at the end is what actually starts them.
+#   Pushing the tag alone would do nothing.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      level:
+        description: 'Version bump to apply'
+        required: false
+        default: 'patch'
+        type: choice
+        options: [patch, minor, major]
+
+permissions:
+  contents: write
+  actions: write
+
+# Never let two releases race for the same version number.
+concurrency:
+  group: auto-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Bump, tag and publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decide whether to release
+        id: gate
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = 'workflow_dispatch' ]; then
+            echo 'go=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # The SUBJECT line only, never the body.
+          #
+          # A job-level `if: !contains(github.event.head_commit.message, ...)`
+          # reads the entire message, and a squashed body is the PR
+          # description. The first run of this workflow skipped itself because
+          # the PR introducing it documented the marker in its own description.
+          # Any PR explaining the feature would switch the feature off.
+          subject=$(git log -1 --pretty=%s)
+          case "$subject" in
+            *'[skip release]'*)
+              echo "Subject carries [skip release]; nothing to do."
+              echo 'go=false' >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo 'go=true' >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Work out the next version
+        if: steps.gate.outputs.go == 'true'
+        id: version
+        run: |
+          set -euo pipefail
+          current=$(node -p "require('./package.json').version")
+
+          # A dispatch says the level outright; a push encodes it in the commit
+          # subject, defaulting to patch so routine merges stay patch releases.
+          message=$(git log -1 --pretty=%s)
+          level="${{ github.event.inputs.level }}"
+          if [ -z "$level" ]; then
+            case "$message" in
+              *'[major]'*) level=major ;;
+              *'[minor]'*) level=minor ;;
+              *)           level=patch ;;
+            esac
+          fi
+
+          IFS=. read -r major minor patch <<< "$current"
+          case "$level" in
+            major) next="$((major + 1)).0.0" ;;
+            minor) next="${major}.$((minor + 1)).0" ;;
+            *)     next="${major}.${minor}.$((patch + 1))" ;;
+          esac
+
+          if git rev-parse "v$next" >/dev/null 2>&1; then
+            echo "::error title=Tag already exists::v$next is already tagged. Nothing to do."
+            exit 1
+          fi
+
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "next=$next" >> "$GITHUB_OUTPUT"
+          echo "level=$level" >> "$GITHUB_OUTPUT"
+          echo "Releasing $current -> $next ($level)"
+
+      - name: Bump the version in every manifest
+        if: steps.gate.outputs.go == 'true'
+        run: |
+          set -euo pipefail
+          npm version "${{ steps.version.outputs.next }}" \
+            --workspaces --include-workspace-root --no-git-tag-version
+
+          # The marketing page carries the version in its JSON-LD block, which
+          # npm knows nothing about.
+          node - <<'EOF'
+          const fs = require('fs');
+          const next = process.env.NEXT;
+          const file = 'docs/index.html';
+          const html = fs.readFileSync(file, 'utf8');
+          const updated = html.replace(
+            /"softwareVersion":\s*"[^"]*"/,
+            `"softwareVersion": "${next}"`,
+          );
+          if (updated === html) {
+            console.log('::warning title=softwareVersion untouched::No JSON-LD version found in docs/index.html');
+          }
+          fs.writeFileSync(file, updated);
+          EOF
+        env:
+          NEXT: ${{ steps.version.outputs.next }}
+
+      - name: Write the changelog entry
+        if: steps.gate.outputs.go == 'true'
+        run: |
+          set -euo pipefail
+          next="${{ steps.version.outputs.next }}"
+
+          # Never clobber a hand-written section. If someone already described
+          # this version properly, theirs is better than anything generated.
+          if grep -q "^## \[$next\]" CHANGELOG.md; then
+            echo "CHANGELOG already documents $next; leaving it alone."
+            exit 0
+          fi
+
+          previous=$(git describe --tags --abbrev=0 2>/dev/null || true)
+          range="HEAD"
+          [ -n "$previous" ] && range="$previous..HEAD"
+
+          {
+            echo "## [$next]"
+            echo
+            echo "Released automatically from \`main\`. The entries below are commit"
+            echo "subjects; see the release notes for the full detail."
+            echo
+            echo "### Changed"
+            echo
+            # Strip the PR reference and the bump markers wherever they sit.
+            # Anchoring to end-of-line missed them: a subject ending "[minor]"
+            # kept its "(#40)", and the marker itself reached Help > What's New.
+            git log "$range" --no-merges --pretty='- %s' \
+              | sed -E 's/ *\(#[0-9]+\)//g; s/ *\[(skip release|minor|major)\]//g'
+            echo
+          } > /tmp/section.md
+
+          # The heading must land above the first existing version section and
+          # below the preamble. generate-release-notes.mjs finds a release's
+          # notes by matching '## [x.y.z]', and the app renders this file in
+          # Help > What's New, so the shape matters.
+          line=$(grep -n '^## \[' CHANGELOG.md | head -1 | cut -d: -f1)
+          head -n "$((line - 1))" CHANGELOG.md > /tmp/changelog.md
+          cat /tmp/section.md >> /tmp/changelog.md
+          tail -n +"$line" CHANGELOG.md >> /tmp/changelog.md
+          mv /tmp/changelog.md CHANGELOG.md
+
+      - name: Commit and tag
+        if: steps.gate.outputs.go == 'true'
+        run: |
+          set -euo pipefail
+          next="${{ steps.version.outputs.next }}"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          git add -A
+          git commit -m "Release $next [skip release]"
+          git tag "v$next"
+          git push origin HEAD:main
+          git push origin "v$next"
+
+      - name: Build the installer and deploy the site
+        if: steps.gate.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          next="${{ steps.version.outputs.next }}"
+
+          # release.yml builds the Windows installer and publishes the GitHub
+          # Release; pages.yml redeploys the site so it carries the new version.
+          gh workflow run release.yml -f tag="v$next"
+          gh workflow run pages.yml
+
+          echo "### Released v$next" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Bump: ${{ steps.version.outputs.current }} → $next (${{ steps.version.outputs.level }})" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Installer: [release.yml](https://github.com/${{ github.repository }}/actions/workflows/release.yml)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Site: [pages.yml](https://github.com/${{ github.repository }}/actions/workflows/pages.yml)" >> "$GITHUB_STEP_SUMMARY"

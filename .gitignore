@@ -1,0 +1,18 @@
+node_modules/
+dist/
+dist-electron/
+# Anchored: electron-builder writes here. Unanchored, this matched any folder
+# named "release" at any depth, which quietly swallowed .claude/skills/release.
+apps/desktop/release/
+*.log
+.DS_Store
+Thumbs.db
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Built by `npm run build:web` into the Pages site; produced in CI, not committed.
+docs/app/
+
+# Claude Code local machine settings; the skills and launch config are shared.
+.claude/settings.local.json

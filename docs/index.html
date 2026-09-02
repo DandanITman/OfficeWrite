@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Titles and descriptions carry no em dash, deliberately.
+      Google prints the meta description verbatim in the result snippet, and an
+      em dash there reads as machine-written. Ordinary punctuation says the same
+      thing and survives every font and encoding a crawler might use.
+    -->
+    <meta
+      name="description"
+      content="A free, open-source alternative to Microsoft Word, LibreOffice and OpenOffice. Opens and saves .docx in your browser or offline on Windows. No account, no subscription."
+    />
+    <link rel="canonical" href="https://officewrite.com/" />
+
+    <!--
+      Open Graph and Twitter image URLs must be absolute. Reddit, Discord, X,
+      Slack and LinkedIn all refuse to resolve a relative path, and the link
+      renders as a bare grey card without one.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Officewrite" />
+    <meta property="og:url" content="https://officewrite.com/" />
+    <meta property="og:title" content="Officewrite: a free Microsoft Word, LibreOffice and OpenOffice alternative" />
+    <meta
+      property="og:description"
+      content="Free and open source. A Microsoft Word, LibreOffice and OpenOffice alternative that opens and saves .docx, in a browser or offline on Windows."
+    />
+    <meta property="og:image" content="https://officewrite.com/shots/editor.png" />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content="The Officewrite editor with a report open" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Officewrite: a free Microsoft Word, LibreOffice and OpenOffice alternative" />
+    <meta
+      name="twitter:description"
+      content="Free and open source. A Microsoft Word, LibreOffice and OpenOffice alternative that opens and saves .docx, in a browser or offline on Windows."
+    />
+    <meta name="twitter:image" content="https://officewrite.com/shots/editor.png" />
+
+    <title>Officewrite: a free Microsoft Word, LibreOffice and OpenOffice alternative</title>
+    <link rel="icon" href="logo.png" />
+    <link rel="stylesheet" href="site.css" />
+
+    <!--
+      Structured data. Feeds Google rich results, and is the machine-readable
+      description answer engines read rather than scraping the marketing copy.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Officewrite",
+        "url": "https://officewrite.com/",
+        "description": "A free, open-source word processor, and an alternative to Microsoft Word, LibreOffice Writer and Apache OpenOffice Writer. Opens and saves Microsoft Word .docx files, runs in a browser or offline on Windows, and needs no account or subscription.",
+        "applicationCategory": "BusinessApplication",
+        "applicationSubCategory": "Word Processor",
+        "operatingSystem": "Windows, Web browser",
+        "installUrl": "https://officewrite.com/#download",
+        "softwareVersion": "0.5.0",
+        "isAccessibleForFree": true,
+        "license": "https://github.com/DandanITman/OfficeWrite/blob/main/LICENSE",
+        "codeRepository": "https://github.com/DandanITman/OfficeWrite",
+        "screenshot": "https://officewrite.com/shots/editor.png",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Opens and saves Microsoft Word .docx files",
+          "A free alternative to Microsoft Word, LibreOffice and OpenOffice",
+          "Runs in a browser with no installation",
+          "Works offline with no account or subscription",
+          "Track changes, comments and review workflow",
+          "Tables, images, shapes and styles",
+          "Spell checking with Hunspell dictionaries",
+          "Export to PDF"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top">
+        <img src="logo.png" alt="" class="brand-logo" width="28" height="28" />
+        <span>Officewrite</span>
+      </a>
+      <nav class="topnav">
+        <a href="#tour">Screenshots</a>
+        <a href="#about">About Project</a>
+        <a href="#compare">Compare</a>
+        <a href="#download">Download</a>
+        <a class="topnav-cta" href="app/">Try in browser</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- Hero ---------------------------------------------------------- -->
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Free · Open source · Non-profit educational project</p>
+          <h1>A free word processor that doesn't ask for your card.</h1>
+          <p class="lede">
+            Officewrite is a free alternative to Microsoft Word, LibreOffice and OpenOffice for
+            essays, letters, reports and CVs, with the ribbon, the styles and the
+            <code>.docx</code> files you already know. Use it
+            <a href="app/">free in your browser</a>, or download it for Windows and work offline.
+            No account, no subscription, nothing uploaded.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="app/">Try in your browser</a>
+            <a id="download-btn" class="btn btn-ghost" href="#download">Download for Windows</a>
+            <a
+              class="btn btn-ghost"
+              href="https://github.com/DandanITman/OfficeWrite"
+              target="_blank"
+              rel="noreferrer"
+              >Read the source</a
+            >
+          </div>
+          <p id="download-meta" class="download-meta">Checking for the latest release…</p>
+        </div>
+
+        <figure class="hero-shot">
+          <img
+            src="shots/editor.png"
+            alt="Officewrite editing a document titled The Water Cycle, showing the Home ribbon with the clipboard, font, paragraph and styles groups"
+            width="1440"
+            height="900"
+            loading="eager"
+          />
+          <figcaption>Every screenshot on this page is the actual app.</figcaption>
+        </figure>
+      </section>
+
+      <!--
+        The three facts sit under both hero columns rather than under the copy.
+        In the column they stretched the text side well past the screenshot and
+        left a band of empty white beside it.
+      -->
+      <ul class="hero-facts">
+        <li><strong>No account.</strong> Nothing to sign up for.</li>
+        <li><strong>No cloud.</strong> Your documents never leave the machine.</li>
+        <li><strong>No lock-in.</strong> Saves plain .docx, which every major word processor opens.</li>
+      </ul>
+
+      <!-- Tour ---------------------------------------------------------- -->
+      <section id="tour" class="panel">
+        <h2>Take a look around</h2>
+        <p class="section-lede">
+          Click a tab, the way you would in the app itself.
+        </p>
+
+        <div class="tour">
+          <div class="tour-tabs" role="tablist" aria-label="Screenshots">
+            <button role="tab" aria-selected="true" data-shot="home">Start screen</button>
+            <button role="tab" aria-selected="false" data-shot="editor">Writing</button>
+            <button role="tab" aria-selected="false" data-shot="insert">Insert</button>
+            <button role="tab" aria-selected="false" data-shot="references">References</button>
+            <button role="tab" aria-selected="false" data-shot="review">Review</button>
+            <button role="tab" aria-selected="false" data-shot="mailings">Mailings</button>
+            <button role="tab" aria-selected="false" data-shot="navigation">Navigation</button>
+            <button role="tab" aria-selected="false" data-shot="dark">Dark mode</button>
+          </div>
+
+          <figure class="tour-stage">
+            <img id="tour-image" src="shots/home.png" alt="" width="1440" height="900" />
+            <figcaption id="tour-caption">
+              Pick up where you left off, or start from a template.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- About the project --------------------------------------------- -->
+      <section id="about" class="panel alt">
+        <h2>About Project</h2>
+        <p class="section-lede">
+          Writing a school essay shouldn't need a subscription.
+        </p>
+        <p class="about-intro">
+          Officewrite is a non-profit educational project. It was built so students, teachers,
+          families and anyone else who needs to write can do it without paying for office
+          software, and so that people learning to program have a real, working application they
+          can read end to end. The interface follows the conventions people
+          already expect from a word processor, so there is very little to learn, and where it
+          differs it says so.
+        </p>
+        <h3 class="about-subhead">What it does</h3>
+        <p class="section-lede">
+          Everything below is built and working today. Anything missing is listed honestly in
+          <a href="https://github.com/DandanITman/OfficeWrite/blob/main/docs/FEATURES.md">FEATURES.md</a>,
+          including what Officewrite still can't do.
+        </p>
+
+        <div class="cards">
+          <article class="card">
+            <h3>Write</h3>
+            <p>
+              Fonts, colours, text effects, bullets, numbering, checklists and multilevel lists,
+              tables you can size to the inch, pictures with drag handles and seven wrap
+              modes, shapes, text boxes and freehand ink.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Structure</h3>
+            <p>
+              A styles gallery, style sets, a table of contents that keeps itself current,
+              footnotes and endnotes, captions, cross-references, an index, and citations in APA,
+              MLA, Chicago or IEEE.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Check</h3>
+            <p>
+              Spell check in English, German, Spanish and French, a grammar checker, AutoCorrect,
+              an offline thesaurus, word count with readability, and an accessibility checker for
+              alt text, headings and contrast.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Review</h3>
+            <p>
+              Track changes with insertions <em>and</em> deletions, a reviewing pane, document
+              compare, comments anchored to the text, and Editing / Reviewing / Viewing modes.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Mail merge</h3>
+            <p>
+              A full Mailings tab. Read recipients from a <code>.csv</code>, insert merge fields,
+              an address block and a greeting line, add rules like If&#8230;Then&#8230;Else and Skip
+              Record If, preview each letter with real values, then merge to a document, the
+              printer, or one file per recipient. Envelopes and labels too.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Share</h3>
+            <p>
+              Open and save <code>.docx</code>, <code>.rtf</code>, <code>.html</code>,
+              <code>.txt</code> and the native <code>.officewrite</code>. Export a PDF. Print with a
+              preview so you can see the page breaks first.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Stay safe</h3>
+            <p>
+              Auto-save, up to twenty versions kept per document, and a delete that goes to the
+              recycle bin rather than nowhere. No telemetry and no network calls of its own.
+            </p>
+          </article>
+        </div>
+
+        <p class="keyboard-note">
+          <strong>Keyboard first.</strong> The shortcuts are the standard ones: Ctrl+B, Ctrl+K, Ctrl+G, F7.
+          The ribbon itself is fully keyboard-operable: arrow along the tabs, open a menu, and
+          walk it without touching the mouse. Alt+Q searches every command by name.
+        </p>
+      </section>
+
+      <!-- Build --------------------------------------------------------- -->
+      <!-- Comparison ---------------------------------------------------- -->
+      <section id="compare" class="panel">
+        <h2>Officewrite vs Microsoft Word, LibreOffice, OpenOffice and Google Docs</h2>
+        <p class="section-lede">
+          The honest version. Officewrite is younger and smaller than any of these. What it offers
+          is that it is free, opens the same files, and asks nothing of you.
+        </p>
+
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">Officewrite</th>
+                <th scope="col">Microsoft Word</th>
+                <th scope="col">LibreOffice Writer</th>
+                <th scope="col">OpenOffice Writer</th>
+                <th scope="col">Google Docs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Cost</th>
+                <td>Free</td>
+                <td>Subscription or licence</td>
+                <td>Free</td>
+                <td>Free</td>
+                <td>Free</td>
+              </tr>
+              <tr>
+                <th scope="row">Account required</th>
+                <td>No</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Works offline</th>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Limited</td>
+              </tr>
+              <tr>
+                <th scope="row">Runs in a browser</th>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <th scope="row">Reads and writes .docx</th>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Reads only</td>
+                <td>Import / export</td>
+              </tr>
+              <tr>
+                <th scope="row">Documents stay on your device</th>
+                <td>Yes</td>
+                <td>Optional</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <th scope="row">Open source</th>
+                <td>Yes</td>
+                <td>No</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="fine-print">
+          Apache OpenOffice opens a <code>.docx</code> but cannot save one; it writes
+          <code>.odt</code> or the older <code>.doc</code>. Officewrite reads and writes
+          <code>.docx</code> directly.
+        </p>
+
+      </section>
+
+      <section id="build" class="panel alt">
+        <h2>Build it yourself</h2>
+        <p class="section-lede">
+          Three commands and it's running on your machine. Pull requests welcome; the tests run on
+          every one.
+        </p>
+        <pre class="code-block"><code>git clone https://github.com/DandanITman/OfficeWrite.git
+cd Officewrite
+npm install &amp;&amp; npm run dev</code></pre>
+        <p class="fine-print">
+          <a href="https://github.com/DandanITman/OfficeWrite/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>
+          explains the layout of the code ·
+          <a href="https://github.com/DandanITman/OfficeWrite/blob/main/docs/testing.md">testing.md</a>
+          explains how the tests are written · every test drives the app through the same controls a
+          person clicks.
+        </p>
+      </section>
+
+      <!-- Download ------------------------------------------------------ -->
+      <section id="download" class="panel download-panel">
+        <h2>Get Officewrite</h2>
+        <p class="section-lede">Windows 10 and 11 · free · no account</p>
+        <a id="download-btn-bottom" class="btn btn-primary btn-lg" href="#">
+          Download the latest Windows build
+        </a>
+        <p class="fine-print">
+          Older builds live on the
+          <a href="https://github.com/DandanITman/OfficeWrite/releases" target="_blank" rel="noreferrer"
+            >Releases</a
+          >
+          page. Prefer to compile it? <code>npm run package</code>.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        <strong>Officewrite</strong>, a free word processor for everyone.
+        <a href="https://github.com/DandanITman/OfficeWrite">github.com/DandanITman/OfficeWrite</a>
+        · <a href="https://github.com/DandanITman/OfficeWrite/blob/main/CHANGELOG.md">Changelog</a>
+        · <a href="https://github.com/DandanITman/OfficeWrite/blob/main/LICENSE">MIT licence</a>
+      </p>
+      <p class="fine-print">
+        An independent open-source project. Not affiliated with Microsoft. DOCX is an open,
+        published file format.
+      </p>
+    </footer>
+
+    <script src="site.js"></script>
+  </body>
+</html>

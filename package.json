@@ -1,0 +1,35 @@
+{
+  "name": "officewrite",
+  "version": "0.5.0",
+  "private": false,
+  "description": "Officewrite: a free, open-source alternative to Microsoft Word, LibreOffice and OpenOffice. A non-profit educational project, open source for anyone to edit.",
+  "workspaces": [
+    "apps/desktop",
+    "packages/core",
+    "packages/openxml"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @officewrite/desktop",
+    "build": "npm run build -w @officewrite/desktop",
+    "package": "npm run package -w @officewrite/desktop",
+    "typecheck": "tsc --noEmit -p packages/core/tsconfig.json && tsc --noEmit -p packages/openxml/tsconfig.json && tsc --noEmit -p apps/desktop/tsconfig.json && tsc --noEmit -p apps/desktop/tsconfig.electron.json && tsc --noEmit -p tsconfig.tests.json",
+    "test": "npm run test:unit",
+    "test:unit": "npm run test -w @officewrite/core && npm run test -w @officewrite/openxml && npm run test -w @officewrite/desktop",
+    "test:e2e": "playwright test tests/e2e",
+    "test:e2e:headed": "playwright test tests/e2e --headed",
+    "test:electron": "npm run build -w @officewrite/desktop && playwright test -c playwright.electron.config.ts",
+    "test:visual": "playwright test tests/visual",
+    "test:visual:update": "playwright test tests/visual --update-snapshots",
+    "regression": "node scripts/regression.mjs",
+    "release-notes": "node scripts/generate-release-notes.mjs",
+    "verify:pages": "node scripts/verify-pages.mjs",
+    "check:em-dashes": "node scripts/check-em-dashes.mjs",
+    "build:web": "npm run build:web -w @officewrite/desktop"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0"
+  }
+}
