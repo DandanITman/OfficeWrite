@@ -42,14 +42,14 @@
     "dictionary-fr": "^3.0.0",
     "lucide-react": "^0.511.0",
     "nspell": "^2.1.5",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "word-extractor": "^1.0.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^4.4.1",
     "electron": "^39.8.10",
     "electron-builder": "^26.15.3",
