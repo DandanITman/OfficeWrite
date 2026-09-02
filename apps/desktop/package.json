@@ -57,7 +57,7 @@
     "png-to-ico": "^2.1.8",
     "sharp": "^0.35.0",
     "typescript": "^5.8.3",
-    "vite": "^6.4.3",
+    "vite": "^8.2.2",
     "vite-plugin-electron": "^0.29.0",
     "vite-plugin-electron-renderer": "^0.14.6",
     "vitest": "^4.1.8"
