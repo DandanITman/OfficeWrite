@@ -1,0 +1,653 @@
+/*
+ * Officewrite project site.
+ *
+ * The palette is the application's own: the #2B579A brand blue on the chrome,
+ * warm grey neutrals for surfaces (#F3F2F1, #FAF9F8), and Segoe UI - so the
+ * site looks like it belongs to the application it is advertising rather than
+ * to a generic landing-page template.
+ */
+
+:root {
+  --word-blue: #2b579a;
+  --word-blue-dark: #204072;
+  --word-blue-light: #e8eef7;
+  --accent: #185abd;
+
+  --ink: #201f1e;
+  --ink-soft: #484644;
+  --ink-faint: #797775;
+
+  --surface: #ffffff;
+  --surface-alt: #faf9f8;
+  --surface-sunk: #f3f2f1;
+  --line: #e1dfdd;
+
+  --radius: 4px;
+  --shadow-card: 0 1.6px 3.6px rgba(0, 0, 0, 0.09), 0 0.3px 0.9px rgba(0, 0, 0, 0.07);
+  --shadow-lift: 0 6.4px 14.4px rgba(0, 0, 0, 0.12), 0 1.2px 3.6px rgba(0, 0, 0, 0.09);
+
+  --font: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.06rem;
+}
+
+p {
+  margin: 0 0 14px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: rgba(24, 90, 189, 0.35);
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--surface-sunk);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.5px 5px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Top bar - the brand blue ------------------------------------ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px;
+  height: 56px;
+  background: var(--word-blue);
+  color: #fff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.02rem;
+  text-decoration: none;
+}
+
+.brand-logo {
+  border-radius: 3px;
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.topnav a {
+  color: #eef3fb;
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+}
+
+.topnav a:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.topnav .topnav-cta {
+  background: #fff;
+  color: var(--word-blue);
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.topnav .topnav-cta:hover {
+  background: #eef3fb;
+  color: var(--word-blue-dark);
+}
+
+/* Hero ------------------------------------------------------------------ */
+.hero {
+  display: grid;
+  /* The two columns are close in width so the copy wraps to fewer, longer
+     lines. A narrow copy column made the headline four lines deep, which left
+     the shot beside it floating in a block of white. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  gap: 40px;
+  /* Top, not centre. Centring a short shot against tall copy padded the space
+     above the screenshot with nothing. */
+  align-items: start;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 24px 20px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--word-blue);
+  background: var(--word-blue-light);
+  border-radius: 999px;
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  max-width: 56ch;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 10px;
+}
+
+/* The 404 page centres its buttons; the hero's row stays left with its text. */
+.cta-row-centred {
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  font-size: 0.97rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+
+.btn-primary {
+  background: var(--word-blue);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--word-blue-dark);
+}
+
+.btn-ghost {
+  background: #fff;
+  color: var(--word-blue);
+  border-color: #c7c6c4;
+}
+
+.btn-ghost:hover {
+  background: var(--surface-sunk);
+  border-color: var(--word-blue);
+}
+
+.btn-lg {
+  padding: 14px 30px;
+  font-size: 1.04rem;
+}
+
+.download-meta {
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+  /* Last line of the hero copy now that the three facts sit below the hero. */
+  margin: 0;
+}
+
+/* A full-width strip under the hero, three across. */
+.hero-facts {
+  list-style: none;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 12px 24px 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 10px 32px;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+}
+
+.hero-facts li {
+  padding-left: 24px;
+  position: relative;
+}
+
+/* A tick, drawn rather than an emoji, so it matches the palette. */
+.hero-facts li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0.55em;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--word-blue);
+  border-bottom: 2px solid var(--word-blue);
+  transform: rotate(-45deg);
+}
+
+.hero-shot,
+.tour-stage {
+  margin: 0;
+}
+
+.hero-shot img,
+.tour-stage img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--shadow-lift);
+}
+
+.hero-shot figcaption,
+.tour-stage figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+/* Sections -------------------------------------------------------------- */
+/* Same 1240 the hero uses, so every section lines up on one left edge. */
+.panel {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 62px 24px;
+}
+
+.panel.alt {
+  max-width: none;
+  background: var(--surface-alt);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.panel.alt > * {
+  max-width: 1192px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-lede {
+  font-size: 1.04rem;
+  color: var(--ink-soft);
+  max-width: 66ch;
+  margin-bottom: 26px;
+}
+
+/* Tour - tabs styled after the ribbon's own tab strip -------------------- */
+.tour-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+
+.tour-tabs button {
+  appearance: none;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+  padding: 9px 14px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tour-tabs button:hover {
+  background: var(--surface-sunk);
+  color: var(--ink);
+}
+
+.tour-tabs button[aria-selected="true"] {
+  color: var(--word-blue);
+  border-bottom-color: var(--word-blue);
+  font-weight: 600;
+}
+
+.tour-tabs button:focus-visible,
+.btn:focus-visible,
+.topnav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Cards ----------------------------------------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--word-blue);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.keyboard-note {
+  margin-top: 22px;
+  padding: 16px 18px;
+  background: var(--word-blue-light);
+  border-left: 3px solid var(--word-blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+/* Why ------------------------------------------------------------------- */
+.why-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.compare th,
+.compare td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare thead th {
+  background: var(--word-blue);
+  color: #fff;
+  font-weight: 600;
+}
+
+.compare tbody th {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.compare tbody tr:nth-child(even) {
+  background: var(--surface-alt);
+}
+
+.compare tbody tr:last-child th,
+.compare tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.compare .yes {
+  color: #107c41; /* Office green, for the column that wins */
+  font-weight: 600;
+}
+
+/* Code ------------------------------------------------------------------ */
+.code-block {
+  background: #1f1f1f;
+  color: #e6e6e6;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0 0 14px;
+}
+
+.code-block code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Download -------------------------------------------------------------- */
+.download-panel {
+  text-align: center;
+}
+
+/* Centre every block in the panel, not only the lede.
+   The paragraphs carry a max-width for readability, and a max-width with no
+   auto margins sits hard left inside a centred section - which is exactly how
+   the fine print under the download button ended up off to one side while the
+   heading and the button above it were centred. */
+.download-panel > p,
+.download-panel .section-lede,
+.download-panel .fine-print {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 62ch;
+}
+
+/* A command is one token to a reader, so it must not wrap mid-way: "npm run"
+   on one line and "package" on the next reads as two commands. */
+.fine-print code {
+  white-space: nowrap;
+}
+
+.fine-print {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  margin-top: 14px;
+}
+
+/* About Project --------------------------------------------------------- */
+
+/* The project's reason for existing, above the feature cards. */
+.about-intro {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  max-width: 72ch;
+  margin: 0 0 30px;
+}
+
+/* "What it does" now sits inside About Project rather than owning a section,
+   so it needs a heading that reads as a step down from the h2. */
+.about-subhead {
+  font-size: 1.28rem;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+/* Footer ---------------------------------------------------------------- */
+.footer {
+  background: var(--word-blue);
+  color: #dce6f5;
+  text-align: center;
+  padding: 30px 24px;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: #fff;
+}
+
+.footer .fine-print {
+  color: #b9c9e4;
+}
+
+/* Responsive ------------------------------------------------------------ */
+/* Below this the two hero columns are too narrow to sit side by side: the
+   headline breaks to four lines and the buttons wrap, so the copy runs far
+   deeper than the screenshot and leaves white beside it. Stacked, the shot
+   takes the full width and the gap disappears. */
+@media (max-width: 1080px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-top: 36px;
+  }
+
+  /* Full width would give the lede lines too long to read comfortably. */
+  .lede {
+    max-width: 62ch;
+  }
+}
+
+@media (max-width: 940px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 620px) {
+  .topbar {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 16px;
+  }
+
+  .topnav {
+    gap: 0;
+  }
+
+  .panel {
+    padding: 44px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+/* Comparison table ------------------------------------------------------ */
+
+/* The table is wider than a phone. Scroll it inside its own box so the page
+   body never scrolls sideways - the same guard TC-UI-002 enforces in the app. */
+.compare-wrap {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.compare-table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare-table thead th {
+  background: var(--surface-alt);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* The row label carries the question; keep it distinct from the answers. */
+.compare-table tbody th {
+  font-weight: 600;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* Officewrite's own column - the one a reader is scanning for. */
+.compare-table thead th:nth-child(2),
+.compare-table tbody td:nth-child(1) {
+  color: var(--word-blue);
+}
+
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td {
+  border-bottom: none;
+}
+

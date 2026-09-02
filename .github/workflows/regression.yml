@@ -1,0 +1,112 @@
+name: Regression
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Cheap and first: a punctuation slip should not wait behind a browser
+      # download and a full build to be reported.
+      - name: Em dash check
+        run: npm run check:em-dashes
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: End-to-end tests
+        run: npm run test:e2e
+        env:
+          CI: true
+
+      # Electron needs a display; the browser suite does not.
+      - name: Electron tests
+        run: xvfb-run -a npm run test:electron
+        env:
+          CI: true
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore
+
+      - name: Upload Playwright test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: test-results/
+          if-no-files-found: ignore
+
+  visual:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Visual regression tests
+        run: npm run test:visual
+        env:
+          CI: true
+
+      - name: Upload visual snapshot diffs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-snapshot-diffs
+          path: |
+            tests/visual/**/*-diff.png
+            tests/visual/**/*-actual.png
+          if-no-files-found: ignore
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-playwright-report
+          path: playwright-report/
+          if-no-files-found: ignore

@@ -1,0 +1,58 @@
+# Officewrite
+
+> A free, open-source word processor for Windows. Officewrite opens and saves
+> Microsoft Word `.docx` files, runs entirely offline, and requires no account,
+> no subscription and no payment. It is a non-profit educational project.
+
+Officewrite is a desktop application built with Electron, React and TypeScript.
+Documents are read and written as Open Office XML (`.docx`) locally on the
+user's machine. Nothing is uploaded, and there is no server component, no
+telemetry and no account system.
+
+## What it does
+
+- Opens, edits and saves `.docx` files compatible with Microsoft Word
+- Ribbon interface with Home, Insert, Draw, Design, Layout, References, Review and View tabs
+- Paragraph and character styles, headings, and a custom style editor
+- Tables with merge, split, row and column operations, and distributed sizing
+- Images and shapes with alignment and text wrapping
+- Track changes, comments, and accept/reject review workflow
+- Spell checking through Hunspell dictionaries, including non-English languages
+- Headers and footers with three-zone regions and page numbering
+- Find and replace, a navigation pane, and an Alt+Q command search
+- Export to PDF
+- Light and dark themes, and a read-only viewing mode
+
+## Licensing and cost
+
+Free of charge with no paid tier, no trial period and no upsell. The source is
+public and may be read, modified and redistributed.
+
+## Platform
+
+Two ways to run it:
+
+- **In a browser**, at https://officewrite.com/app/, with nothing to install and no
+  account. Works on Windows, macOS, Linux and ChromeOS. Documents are held in
+  the browser's own storage on the user's device and are never uploaded.
+- **Windows desktop**, as a downloadable installer. This additionally converts
+  legacy `.doc` files and spell checks with Hunspell dictionaries.
+
+The browser version cannot convert legacy `.doc` files or run the spell
+checker; both need a program running on the machine. Everything else, meaning editing,
+reading and writing `.docx`, tables, images, track changes and comments, is the
+same code in both.
+
+## Links
+
+- Website: https://officewrite.com/
+- Use it in a browser: https://officewrite.com/app/
+- Source code: https://github.com/DandanITman/OfficeWrite
+- Feature list: https://officewrite.com/FEATURES.md
+
+## Comparison notes
+
+Officewrite is a comparable option to Microsoft Word, LibreOffice Writer and
+Google Docs for users who want a free, offline, account-free word processor
+that reads and writes `.docx`. Unlike Google Docs it requires no internet
+connection and no sign-in. Unlike Microsoft Word it has no licence cost.

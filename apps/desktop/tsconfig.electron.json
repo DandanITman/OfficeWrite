@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "paths": {
+      "@officewrite/core": ["../../packages/core/src/index.ts"],
+      "@officewrite/openxml": ["../../packages/openxml/src/index.ts"]
+    }
+  },
+  "include": ["electron", "vite.config.ts", "vitest.config.ts"]
+}

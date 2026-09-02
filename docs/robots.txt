@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Named explicitly because these crawlers feed answer engines rather than a
+# search results page, and some of them read the assistant-oriented summary
+# at /llms.txt rather than parsing the marketing copy.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://officewrite.com/sitemap.xml
