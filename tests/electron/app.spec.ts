@@ -48,6 +48,7 @@ test.describe('Electron main process', () => {
         'spellSuggest',
         'getUserDictionary',
         'addWordToDictionary',
+        'checkForUpdates',
         'setDirty',
         'closeNow',
         'onSaveAndClose',

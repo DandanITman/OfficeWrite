@@ -11,11 +11,19 @@ export type ImportDocResult =
   | { format: 'docx'; data: ArrayBuffer; source: 'libreoffice' }
   | { format: 'text'; data: string; source: 'extractor'; warning: string };
 
+export type UpdateCheckResult =
+  | { status: 'available'; version: string; releaseUrl: string }
+  | { status: 'up-to-date' }
+  | { status: 'offline' }
+  | { status: 'unavailable' }
+  | { status: 'rate-limited' };
+
 /**
  * The complete contract between the renderer and the host process.
  *
- * Every member here must have a matching `ipcMain.handle` in `electron/` and a
- * matching stub in the test harness. Nothing in `src/` may reach for
+ * Required members have a matching `ipcMain.handle` in `electron/` and a
+ * matching stub in the test harness. Optional capabilities are checked before use.
+ * Nothing in `src/` may reach for
  * `window.officewrite` directly - go through `platform` in ./index.ts so the
  * missing-bridge case stays handled in exactly one place.
  */
@@ -60,10 +68,13 @@ export interface OfficewriteAPI {
   addWordToDictionary: (word: string) => Promise<string[]>;
 
   /**
-   * Help tab: open a project URL in the user's browser. Resolves false when the
+   * Help and About: open a project URL in the user's browser. Resolves false when the
    * host rejects it - the allowlist lives in the main process, not here.
    */
   openExternal: (url: string) => Promise<boolean>;
+
+  /** Desktop only: manually check the project's published Windows release. */
+  checkForUpdates?: () => Promise<UpdateCheckResult>;
 
   /** Mirror the unsaved-changes flag so the host can prompt before closing. */
   setDirty: (dirty: boolean) => Promise<boolean>;

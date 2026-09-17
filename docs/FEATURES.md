@@ -192,8 +192,8 @@ Merge fields are stored as document fields, so they survive a save and reopen. I
 `.docx`, `.rtf` and HTML they export as their «FieldName» text, which is legible
 rather than corrupt anywhere else.
 
-Officewrite makes no network requests, so the e-mail merge writes files rather
-than sending mail.
+Officewrite does not send e-mail. The e-mail merge writes files for you to attach
+in your own mail app.
 
 ## Review
 
@@ -337,9 +337,21 @@ marks, links, tables, lists and images.
 - Shapes and text boxes are arranged from Layout > Arrange rather than a
   contextual tab of their own
 
+## Update checks
+
+The desktop About dialog shows the installed version and a small two-arrow button
+to check GitHub for a newer published Windows release. The arrows spin during the
+check. When an update is available, a link opens its release page in your browser
+so you can choose whether to download it.
+
+Checks run only when clicked, skip connections reported as offline, and time out
+if the release service cannot be reached. They do not send document content,
+download installers, install updates, or run in the background. The browser
+edition does not offer the Windows update checker.
+
 ## Not in scope
 
 Officewrite is local-first. It has no accounts, no cloud sync, no collaboration, no
-AI features and no telemetry, and it makes no network requests of its own. The
-Help tab hands a GitHub URL to your browser, and the main process refuses any
-address outside this project's repository.
+AI features and no telemetry. The desktop update checker contacts GitHub only on
+request. Help and update-release links open in your browser, and the main process
+refuses any address outside this project's repository.

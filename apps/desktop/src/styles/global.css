@@ -1063,6 +1063,71 @@ select:focus-visible {
   font-size: 14px;
 }
 
+/* About stays a readable white card in either application theme. */
+.dialog.about-dialog {
+  --bg-panel: #ffffff;
+  --bg-hover: #f1f5f9;
+  --border: #d1d5db;
+  --text: #374151;
+  --text-secondary: #4b5563;
+  --text-muted: #4b5563;
+  background: #ffffff;
+  color: #374151;
+  line-height: 1.55;
+}
+
+.about-version-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  color: #4b5563;
+  font-size: 13px;
+}
+
+.about-update-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #4b5563;
+}
+
+.about-update-check:hover:not(:disabled) { background: #f1f5f9; }
+.about-update-check:disabled { cursor: default; color: #6b7280; }
+.about-update-check:focus-visible,
+.about-release-link:focus-visible { outline: 2px solid #0b6f9f; outline-offset: 3px; }
+.about-update-spinning { animation: about-update-spin 1s linear infinite; }
+
+.about-updates {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #d1d5db;
+  font-size: 13px;
+}
+
+.about-update-status { margin: 0; }
+.about-update-note { margin: 10px 0 0; color: #4b5563; font-size: 12px; }
+.about-release-link {
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #075f89;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@keyframes about-update-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .about-update-spinning { animation: none; }
+}
+
 /* File > Print: settings beside a live preview, as is conventional. The preview
    matters more here than it usually would, because the editor scrolls
    continuously and never reflows pages on screen. */
