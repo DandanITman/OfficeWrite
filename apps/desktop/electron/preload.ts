@@ -1,5 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import type { DocumentRevision } from '@officewrite/core';
+import type { UpdateCheckResult } from '../src/platform/api';
 
 const OPEN_FILE_CHANNEL = 'officewrite:open-file';
 const SAVE_AND_CLOSE_CHANNEL = 'officewrite:save-and-close';
@@ -64,8 +65,9 @@ contextBridge.exposeInMainWorld('officewrite', {
   addWordToDictionary: (word: string) =>
     ipcRenderer.invoke('spell:addWord', word) as Promise<string[]>,
 
-  // Help tab: the main process re-checks the URL against its allowlist.
+  // Help and About: the main process re-checks URLs against its allowlist.
   openExternal: (url: string) => ipcRenderer.invoke('shell:openExternal', url) as Promise<boolean>,
+  checkForUpdates: () => ipcRenderer.invoke('app:checkForUpdates') as Promise<UpdateCheckResult>,
 
   // Unsaved-changes guard: the renderer mirrors its dirty flag to the main
   // process, which prompts on close and asks the renderer to save.

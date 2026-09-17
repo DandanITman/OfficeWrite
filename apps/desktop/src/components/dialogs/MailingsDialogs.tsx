@@ -1633,8 +1633,8 @@ export function FinishMergeDialog({
 
       {destination === 'email' && (
         <p className="muted">
-          <Info size={13} /> Officewrite makes no network requests, so it writes one document per
-          recipient for you to attach rather than sending mail itself.
+          <Info size={13} /> Officewrite writes one document per recipient for you to attach
+          in your own mail app. It does not send mail itself.
         </p>
       )}
 

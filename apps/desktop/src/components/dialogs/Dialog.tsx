@@ -16,6 +16,7 @@ export function Dialog({
   testId,
   wide,
   closeLabel = 'Done',
+  className = '',
 }: {
   title: string;
   onClose: () => void;
@@ -23,6 +24,7 @@ export function Dialog({
   testId: string;
   wide?: boolean;
   closeLabel?: string;
+  className?: string;
 }) {
   // Escape closes, as it does in every dialog.
   useEffect(() => {
@@ -39,7 +41,7 @@ export function Dialog({
   return (
     <div className="backdrop" onClick={onClose}>
       <div
-        className={`dialog panel-card${wide ? ' dialog-wide' : ''}`}
+        className={`dialog panel-card${wide ? ' dialog-wide' : ''}${className ? ` ${className}` : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}

@@ -10,6 +10,7 @@ import { registerRevisionIpc } from './ipc/revisions';
 import { registerOutputIpc } from './ipc/output';
 import { attachCloseGuard, registerWindowIpc } from './ipc/window';
 import { registerExternalIpc } from './ipc/external';
+import { registerUpdateIpc } from './ipc/updates';
 
 /**
  * The dev server URL, injected by vite-plugin-electron when running `npm run
@@ -103,6 +104,7 @@ if (!gotLock) {
     registerOutputIpc(getWindow);
     registerWindowIpc(getWindow);
     registerExternalIpc();
+    registerUpdateIpc();
 
     // Capture the launch argument before the window exists; the renderer
     // collects it once it has mounted.

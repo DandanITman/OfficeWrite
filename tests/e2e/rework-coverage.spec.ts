@@ -160,7 +160,7 @@ test.describe('Reworked features', () => {
     // "About" was permanently disabled.
     await page.getByTestId('home-about').click();
     await expect(page.getByTestId('about-dialog')).toBeVisible();
-    await page.getByTestId('about-dialog').getByRole('button', { name: 'Close' }).click();
+    await page.getByTestId('about-dialog-close').click();
 
     // The recent-file "More" button had no onClick at all.
     const row = page.locator('.home-doc-actions').first();

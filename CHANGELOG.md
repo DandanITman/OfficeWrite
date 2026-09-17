@@ -8,6 +8,37 @@ Officewrite uses [semantic versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Add a manual desktop update checker in About beside the installed version.
+  Its two-arrow button spins while checking the latest published Windows release
+  on GitHub and offers the release page when a newer version is available.
+  Offline connections skip the request; unreachable services time out without
+  interrupting editing. No automatic downloads, installation or background checks.
+
+### Fixed
+
+- Give About an opaque white card with readable grey text in both themes, using
+  the shared dialog's close button and Escape handling.
+
+### Documentation
+
+- Explain the optional GitHub update request and remove outdated claims that the
+  desktop app never contacts the network. Documents remain local.
+
+### Testing
+
+- Add nine native Electron update-check regressions covering both About themes,
+  manual requests, numeric version comparison, trusted release links, cached
+  results, offline and reconnect behavior, retries, timeouts, rate limits and
+  invalid release information. Keep the existing About-close and bridge checks
+  aligned with the new dialog.
+- Confirm the built desktop app reaches GitHub and reports the current version;
+  inspect About captures in light and dark themes and while offline.
+- Pass type checking, desktop and browser builds, the site artifact check, and
+  879 tests: 519 unit, 292 editor, 13 browser/site, 28 Windows Electron and
+  27 visual checks. Nine optional marketing captures remain skipped.
+
 ## [0.6.3] - 2026-09-10
 
 Security and reliability update for the Windows application and browser editor.

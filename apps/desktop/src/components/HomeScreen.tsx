@@ -25,6 +25,7 @@ import { TEMPLATES, TEMPLATE_CATEGORIES } from '@officewrite/core';
 import type { RecentFile, AppSettings, Template } from '@officewrite/core';
 import { appIconUrl } from '../utils/assets';
 import { TemplatePreview } from './TemplatePreview';
+import { AboutDialog } from './dialogs/AboutDialog';
 
 type HomeTab = 'recent' | 'favorites';
 type SidebarItem = 'home' | 'new' | 'open';
@@ -300,23 +301,7 @@ export function HomeScreen({
           onClose={() => setPreviewId(null)}
         />
       )}
-      {aboutOpen && (
-        <div className="backdrop" onClick={() => setAboutOpen(false)}>
-          <div className="dialog" onClick={(e) => e.stopPropagation()} data-testid="about-dialog">
-            <h2>About Officewrite</h2>
-            <p className="muted">
-              A free, open-source word processor. Local-first: documents stay on this
-              machine and the app makes no network requests.
-            </p>
-            <p className="muted">Licensed under MIT.</p>
-            <div className="dialog-actions">
-              <button className="btn-primary" onClick={() => setAboutOpen(false)}>
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {aboutOpen && <AboutDialog onClose={() => setAboutOpen(false)} />}
       <aside className="home-sidebar">
         <button className="home-sidebar-back" onClick={onGoToEditor} title="Back to editor">
           <ChevronLeft size={20} />

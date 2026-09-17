@@ -24,8 +24,9 @@ Officewrite is a free alternative to Microsoft Word, LibreOffice and OpenOffice.
 letters, reports and CVs, with the ribbon, the styles and the `.docx` files you already know. It
 runs on your own Windows PC, works offline, and costs nothing.
 
-There is **no account, no cloud, and no telemetry.** Your documents stay on your machine, and the
-app makes no network requests of its own.
+There is **no account, no cloud, and no telemetry.** Your documents stay on your machine.
+The desktop app contacts GitHub only when you click the update-check arrows in About.
+Checks skip offline connections and never download or install updates automatically.
 
 <p align="center">
   <img src="docs/shots/editor.png" alt="Officewrite editing a document, showing the Home ribbon" width="820" />

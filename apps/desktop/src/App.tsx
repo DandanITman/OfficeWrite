@@ -176,8 +176,8 @@ const REPO_URL = 'https://github.com/DandanITman/OfficeWrite';
 /**
  * Hand a project URL to the user's browser.
  *
- * The app itself still makes no network requests - this opens the OS browser
- * and nothing is loaded in a Officewrite window. A refusal means the main-process
+ * This opens the OS browser; nothing is loaded in an Officewrite window.
+ * A refusal means the main-process
  * allowlist rejected the URL, which is worth surfacing rather than swallowing.
  */
 async function openProjectUrl(url: string) {
@@ -1191,9 +1191,8 @@ export default function App() {
    * document, as a merge is expected to - the main document with its fields stays
    * untouched, which is what lets you fix a typo and merge again.
    *
-   * E-mail writes one file per recipient instead of sending anything. Officewrite
-   * makes no network requests, so pretending to send mail would be a lie; the
-   * dialog says so before the user commits.
+   * E-mail writes one file per recipient for the user to attach in their own
+   * mail app. The dialog explains this before the user commits.
    */
   const finishMerge = useCallback(
     async (request: { from: number; to: number; answers: Record<string, string> }) => {
